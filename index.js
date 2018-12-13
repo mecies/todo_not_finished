@@ -24,6 +24,13 @@ async function addToDb(){
     test = await test.save();
 }
 
-addToDb();
+async function getTest(){
+    const test = await TestModel
+    .find({ name: 'i am the tester' }) // returns doc query object kinda like ap romise
+    
+    console.log(test);
+}
+// addToDb();
+getTest();
 app.listen(3000);
 
