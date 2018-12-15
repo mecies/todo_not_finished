@@ -31,6 +31,8 @@ async function getTest(){
     console.log(test);
 }
 // addToDb();
+//branch maciej
+let i;
 getTest();
 app.listen(3000);
 
