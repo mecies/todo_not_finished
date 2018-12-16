@@ -5,14 +5,17 @@ const mongoose = require('mongoose');
 const passport = require('passport');
 // login: maciek
 //password: todolist1
+
+app.use(express.json());
+
 mongoose.connect('mongodb://maciek:todolist1@ds123852.mlab.com:23852/todo-project', {
     useNewUrlParser: true
 })
-.then(()=> console.log('connected to mongo db'))
-.catch(err => console.error('Could not connect to MongoDB', err));
+.then(()=> console.log('connected to mlab'))
+.catch(err => console.error('Could not connect to mlab', err));
 
 
-const testSchema = new mongoose.Schema({
+const userSchema = new mongoose.Schema({
     name: {
         type: String,
         required: true
@@ -20,23 +23,29 @@ const testSchema = new mongoose.Schema({
 })
 
 
-const TestModel = mongoose.model('test', testSchema)
+const UserModel = mongoose.model('user', userSchema)
 
 //dodawanie lokalnie do mongo db
 async function addToDb(){
-    let test = new TestModel({name: 'hejka ja marcines nowy w bazie'})
-    test = await test.save();
+    let user = new UserModel({name: 'newUser'})
+    user = await user.save();
 }
 
-async function getTest(){
-    const test = await TestModel
-    .find({ name: 'i am the tester' }) // returns doc query object kinda like ap romise
-    
-    console.log(test);
-}
- addToDb();
-//branch maciej
+async function getUser() {
+    const user = await UserModel
+        .find({ name: 'newUser' }) // returns doc query object kinda like ap romise
 
-//getTest();
-//app.listen(3000);
+    console.log(user);
+}
+
+
+app.post('/collections/users', async (req, res) => {
+    let user = new UserModel({
+        name: req.params.name
+    })
+    user = await user.save();
+
+})
+
+app.listen(23852, ()=> console.log('listening'))
 
