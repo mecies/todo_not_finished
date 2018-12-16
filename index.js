@@ -26,26 +26,27 @@ const userSchema = new mongoose.Schema({
 const UserModel = mongoose.model('user', userSchema)
 
 //dodawanie lokalnie do mongo db
-async function addToDb(){
-    let user = new UserModel({name: 'newUser'})
-    user = await user.save();
-}
+// async function addToDb(){
+//     let user = new UserModel({name: 'newUser'})
+//     user = await user.save();
+// }
 
-async function getUser() {
-    const user = await UserModel
-        .find({ name: 'newUser' }) // returns doc query object kinda like ap romise
+// async function getUser() {
+//     const user = await UserModel
+//         .find({ name: 'newUser' }) // returns doc query object kinda like ap romise
 
-    console.log(user);
-}
+//     console.log(user);
+// }
 
 
 app.post('/collections/users', async (req, res) => {
     let user = new UserModel({
-        name: req.params.name
+        name: req.body.name
     })
     user = await user.save();
+    res.send(user)
 
 })
 
-app.listen(23852, ()=> console.log('listening'))
+app.listen(3000, ()=> console.log('listening'))
 
